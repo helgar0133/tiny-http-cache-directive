@@ -29,3 +29,10 @@ preserves every value: the first occurrence keeps the plain name and
 subsequent ones get a predictable `"name_2"`, `"name_3"` suffix. If your
 upstream sends a single, well-formed directive you will never see these; if
 it does not, you at least see what was actually sent.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
